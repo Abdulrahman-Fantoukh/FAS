@@ -1,3 +1,5 @@
+
+
 import java.io.*;
 import java.util.Arrays;
 
@@ -9,13 +11,15 @@ public class readtxt {
 	public  void read() throws IOException {
 		int cpu=0;
 		int memory=0;
+		int prememory=-1;
 		int io=0;
+		int name=1;
 		Program p;
 		
 		String line;
 		try {
 			BufferedReader br = new BufferedReader(
-					new FileReader("C:\\Users\\436100096\\workspace\\multiprogram OS simulation\\src\\cpumemoryio.txt"));
+					new FileReader("C:\\Users\\436100096\\workspace\\OS\\src\\cpumemoryio.txt"));
 			br.readLine();
 			int count=0;
 			int typecount=1;
@@ -27,12 +31,28 @@ public class readtxt {
 				int[] array = Arrays.stream(line.split("\\s")).mapToInt(Integer::parseInt).toArray();
 				for(int i =1; i<array.length; i++) {
 					
-					//System.out.print(array[i]);
+					if(i==array.length-1&&i%3!=0){
+						
+						memory=0;
+						io=0;
+						cpu=array[i];
+						p = new Program(name,cpu,memory,io);
+						if(lts.addProccess(p)){
+							//System.out.println("added"+p.getCpu());
+						}
+						else{
+							//System.out.println("not added");
+						}
+						break;
+						
+					}
 					
-					if(typecount==1)
+				 if(typecount==1)
 					cpu=array[i];
-					else if(typecount==2)
+					else if(typecount==2){
+						
 						memory=array[i];
+					}
 					else
 						io=array[i];
 					typecount++;
@@ -41,13 +61,14 @@ public class readtxt {
 						
 						
 						typecount=1;
-						p = new Program(cpu,memory,io);
+						p = new Program(name,cpu,memory,io);
 						if(!r.full()){
 							if(lts.addProccess(p)){
-								System.out.println("added"+p.getCpu());
+								//System.out.println("added"+p.getCpu());
+							
 							}
 							else{
-								System.out.println("not added");
+								//System.out.println("not added");
 							}
 					}
 					
@@ -61,10 +82,12 @@ public class readtxt {
 					}
 						
 				}
+				name++;
 				break;
+				
 			}
-			if(count<=50)
-				System.out.println("END"+count);
+			if(count<=50){}
+				//System.out.println("END"+count);
 			else
 				break;
 			}
@@ -80,7 +103,10 @@ public class readtxt {
 			System.out.println("END"+i);
 		}
 	}
+	
 	public static void main(String[] args) {
+		
+		
 		readtxt a=new readtxt();
 		try{
 			
@@ -89,7 +115,11 @@ public class readtxt {
 		catch(Exception e){
 			
 		}
-		a.callprint();
+		//a.lts.printjob();
+		a.lts.callcontinues(a.lts.jobQueue);
+		a.lts.printpq();
+		
+		
 		
   
 	}

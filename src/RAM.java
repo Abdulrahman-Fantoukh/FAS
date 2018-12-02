@@ -18,5 +18,17 @@ public class RAM {
 	public int getLimitSize(){
 		return limitSize;
 	}
+	public boolean addProcessRQ(Program p){
+		if(full()){
+			return false;
+		}
+		else{
+			readyQueue.add(p);
+			return true;
+		}
+		
+		
+		
+	}
 
 }
