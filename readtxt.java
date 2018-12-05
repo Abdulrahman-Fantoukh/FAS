@@ -114,5 +114,9 @@ public class readtxt {
 		a.lts.printjobQ();
 		a.lts.callcontinues(a.lts.jobQueue);
 		a.lts.printpq();
+		a.lts.printpq();
+		a.lts.printpq();
+
+		
 	}
 }

@@ -1,5 +1,5 @@
 public class RAM {
-	private final double limitSize = 144.0;
+	private final double limitSize = 144000.0;
 	double size = 0;
 	public LinkedPQ<Program> readyQueue = new LinkedPQ<Program>();
 	private static RAM ram;
@@ -34,8 +34,9 @@ public class RAM {
 			return false;
 		}
 		else{
-			readyQueue.enqueue(p,p.records.get(p.pointer).cpu,getInstance());
+			readyQueue.enqueue(p,getInstance());
 			size = size + p.records.get(p.pointer).memory;
+			
 			if(size<0){
 				size=0;
 			}

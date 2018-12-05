@@ -2,6 +2,7 @@ import java.util.LinkedList;
 
 public class LTS {
 	LinkedList<Program> jobQueue;
+	LinkedList<Program> tmpList;
 	RAM r = RAM.getInstance();
 	public long start;
 	public long finish;
@@ -10,6 +11,7 @@ public class LTS {
 	public LTS(){
 		jobQueue = new LinkedList<Program>();
 		saved=0;
+		tmpList = new LinkedList<Program>();
 		
 	}
 	//add to job queue
@@ -20,12 +22,14 @@ public class LTS {
 	
 	public void time(){
 	 start=System.nanoTime();
-	 finish=start+200000000;
+	 finish=start+200;
+	 
 	}
 	//waking up the OS every 200 ms and add to Ready queue
 	public void continues(LinkedList<Program> jobQ){
 		if(System.nanoTime()>=finish){
 			if (r.addProcessRQ(jobQ.get(saved))){
+			
 				saved++;
 				
 			   
@@ -37,17 +41,37 @@ public class LTS {
 	}
 	//this method to print the ready queue
 	public void printpq(){
-		System.out.print(r.getSize());
-		double faisal = r.getSize();
-		for(int i=0;i<faisal;i++){
-			Program tmp=r.readyQueue.serve().data;
-			if(tmp.pointer>tmp.cyclenum){
-				System.out.println("wrooooooooooooooooooooong");
-			}
-			System.out.println("##$##"+tmp.records.get(tmp.pointer).cpu);
-			r.readyQueue.enqueue(tmp, tmp.records.get(tmp.pointer++).cpu, r);
+		
+		// tmp.incpointer();
+			 //r.readyQueue.enqueue(tmp,r);
 			
+				 double faisal = jobQueue.size();
+				 for(int i=0;i<faisal;i++){
+					 
+					 Program tmp=r.readyQueue.serve().data;
+					 
+					 if(tmp.checkloop==1){
+						 tmpList.add(tmp);
+						 return;
+					 }
+					 System.out.println("*********************");
+					 System.out.println("before pointer: "+tmp.pointer);
+					 System.out.println("CPU:"+tmp.records.get(tmp.pointer).cpu);
+					 System.out.println("MEMORY:"+tmp.records.get(tmp.pointer).memory);
+					 System.out.println("after pointer: "+tmp.pointer);
+					 System.out.println(tmp.getName());
+					 System.out.println("*********************");
+					 tmp.incpointer();
+					 tmpList.add(tmp);
+		
 		}
+			int tmpListSize = tmpList.size();
+			for(int s=0; s<tmpListSize; s++){
+				r.readyQueue.enqueue(tmpList.get(s), r);
+			}
+			for(int h=0;h<tmpListSize;h++){
+				tmpList.remove();
+			}
 	}
 	//print job queue
 	public void printjobQ(){
@@ -62,7 +86,7 @@ public class LTS {
 		while(true){
 			
 			continues(j);
-			if(LTS.saved==10){
+			if(LTS.saved==j.size()){
 				break;
 			}
 	}

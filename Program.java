@@ -4,6 +4,16 @@ public class Program {
 	public int cyclenum;
 	public int pointer;
 	private int cpuin=0;
+	public int checkloop;
+	public void incpointer(){
+		pointer++;
+		if(pointer>cyclenum-1){
+			checkloop=1;
+			pointer=0;
+			System.out.println(name+" end cycle###"+"\n\n\n\n");
+		}
+		
+	}
 	public int getCpuin() {
 		return cpuin;
 	}
@@ -35,6 +45,7 @@ public class Program {
 		records = r;
 		cyclenum = cycle;
 		pointer=0;
+		checkloop=0;
 	}
 	public int getName() {
 		return name;
