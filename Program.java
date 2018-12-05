@@ -1,5 +1,8 @@
-
+import java.util.LinkedList;
 public class Program {
+	LinkedList<Records> records;
+	public int cyclenum;
+	public int pointer;
 	private int cpuin=0;
 	public int getCpuin() {
 		return cpuin;
@@ -23,18 +26,15 @@ public class Program {
 	private int cputime=0;
 	public  int pid = 1;
 	private int name;
-	private int cpu;
-	private int memory;
-	private int io;
 	public enum state{READY, WAITING, RUNNING, TERMINATED, KILLED}
 	private state s;
 	
-	public Program(int name,int cpu,int memory,int io){
+	public Program(int name,LinkedList<Records> r,int cycle){
 		this.name = name;
-		this.cpu = cpu;
-		this.memory = memory;
-		this.io = io;
 		pid++;
+		records = r;
+		cyclenum = cycle;
+		pointer=0;
 	}
 	public int getName() {
 		return name;
@@ -42,24 +42,7 @@ public class Program {
 	public void setName(int name) {
 		this.name = name;
 	}
-	public int getCpu() {
-		return cpu;
-	}
-	public void setCpu(int cpu) {
-		this.cpu = cpu;
-	}
-	public int getMemory() {
-		return memory;
-	}
-	public void setMemory(int memory) {
-		this.memory = memory;
-	}
-	public int getIo() {
-		return io;
-	}
-	public void setIo(int io) {
-		this.io = io;
-	}
+	
 	public int getpid(){
 		return pid;
 	}

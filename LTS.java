@@ -27,6 +27,7 @@ public class LTS {
 		if(System.nanoTime()>=finish){
 			if (r.addProcessRQ(jobQ.get(saved))){
 				saved++;
+				
 			   
 			}else{
 				jobQ.get(saved).setMemorywait(jobQ.get(saved).getMemorywait()+1);
@@ -34,26 +35,34 @@ public class LTS {
 			 time();
 		}
 	}
-	//this method to print the priority queue
+	//this method to print the ready queue
 	public void printpq(){
 		System.out.print(r.getSize());
 		double faisal = r.getSize();
 		for(int i=0;i<faisal;i++){
-			System.out.println("##$##"+r.readyQueue.serve().data.getCpu());
+			Program tmp=r.readyQueue.serve().data;
+			if(tmp.pointer>tmp.cyclenum){
+				System.out.println("wrooooooooooooooooooooong");
+			}
+			System.out.println("##$##"+tmp.records.get(tmp.pointer).cpu);
+			r.readyQueue.enqueue(tmp, tmp.records.get(tmp.pointer++).cpu, r);
 			
 		}
 	}
 	//print job queue
 	public void printjobQ(){
+	
 		for(int i=0;i<jobQueue.size();i++){
-			
-			System.out.println("##CPU OF PROCESS##: "+jobQueue.get(i).getName() +","+jobQueue.get(i).getCpu());
+			for(int j=0;j<jobQueue.get(i).cyclenum;j++)
+			System.out.println("##CPU OF PROCESS##: "+jobQueue.get(i).getName() +","+jobQueue.get(i).records.get(j).cpu);
 		}
 	}
 	public void callcontinues(LinkedList<Program> j){
+		
 		while(true){
+			
 			continues(j);
-			if(LTS.saved==j.size()){
+			if(LTS.saved==10){
 				break;
 			}
 	}

@@ -1,5 +1,5 @@
 public class RAM {
-	private final double limitSize = 140.8;
+	private final double limitSize = 144.0;
 	double size = 0;
 	public LinkedPQ<Program> readyQueue = new LinkedPQ<Program>();
 	private static RAM ram;
@@ -26,8 +26,7 @@ public class RAM {
 		return size;
 	}
 	public boolean addProcessRQ(Program p){
-		
-		if(full() || limitSize < p.getMemory() + size){
+		if(full() || limitSize < p.records.get(p.pointer).memory + size){
 			p.setState(p.getState().WAITING);
 			System.out.println("full -_- the size is: " + size+"\n");
 			System.out.println(p.getMemorywait());
@@ -35,8 +34,8 @@ public class RAM {
 			return false;
 		}
 		else{
-			readyQueue.enqueue(p,p.getCpu(),getInstance());
-			size = size + p.getMemory();
+			readyQueue.enqueue(p,p.records.get(p.pointer).cpu,getInstance());
+			size = size + p.records.get(p.pointer).memory;
 			if(size<0){
 				size=0;
 			}

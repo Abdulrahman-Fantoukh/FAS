@@ -27,7 +27,7 @@ public class LinkedPQ<T> {
 	public boolean enqueue(Program p, double cpuBurst,RAM r) {
 		PQNode tmp = new PQNode(p, cpuBurst);
 		
-		if(r.full() || r.getLimitSize() < p.getMemory() + r.getSize()){
+		if(r.full() || r.getLimitSize() < p.records.get(p.pointer).memory + r.getSize()){
 		p.setState(p.getState().WAITING);
 		return false;
 	}

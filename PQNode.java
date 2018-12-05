@@ -12,7 +12,7 @@ public class PQNode {
 	
   public PQNode(Program e, double Exepected_Execution_time) {
        data = e;
-       this.cpuBurst = e.getCpu();
+       this.cpuBurst = e.records.get(e.pointer).cpu;
   }
   
 }
