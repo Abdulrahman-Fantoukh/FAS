@@ -1,7 +1,11 @@
+import java.util.*;
 public class RAM {
-	private final double limitSize = 144000.0;
+	Queue<Program> pq = new PriorityQueue<>();
+	
+	
+	private final double limitSize = 1440.0;
 	double size = 0;
-	public LinkedPQ<Program> readyQueue = new LinkedPQ<Program>();
+	
 	private static RAM ram;
 	
 	static{
@@ -10,6 +14,7 @@ public class RAM {
 	public static RAM getInstance(){
 		return ram;
 	}
+	
 //	//public RAM() {
 //		limitSize = 140.8;
 //		readyQueue = new LinkedPQ<Program>();
@@ -34,13 +39,14 @@ public class RAM {
 			return false;
 		}
 		else{
-			readyQueue.enqueue(p,getInstance());
+			//readyQueue.enqueue(p,getInstance());
+			pq.add(p);
 			size = size + p.records.get(p.pointer).memory;
 			
 			if(size<0){
 				size=0;
 			}
-			System.out.println("empty ^_^ and the size is: " + size+"\n");
+			System.out.println("free space ^_^ and the size is: " + size+"\n");
 			
 			return true;
 		}

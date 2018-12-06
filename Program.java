@@ -1,16 +1,25 @@
-import java.util.LinkedList;
-public class Program {
+import java.util.*;
+public class Program implements Comparable<Program> {
+	public int compareTo(Program p) { 
+		
+        if (this.records.get(this.pointer).cpu > p.records.get(p.pointer).cpu) 
+            return 1; 
+        else if (this.records.get(this.pointer).cpu < p.records.get(p.pointer).cpu)
+            return -1; 
+                        return 0; 
+        
+} 
 	LinkedList<Records> records;
 	public int cyclenum;
 	public int pointer;
 	private int cpuin=0;
-	public int checkloop;
+	public int finishcycle;
 	public void incpointer(){
 		pointer++;
 		if(pointer>cyclenum-1){
-			checkloop=1;
+			finishcycle=1;
 			pointer=0;
-			System.out.println(name+" end cycle###"+"\n\n\n\n");
+			System.out.println(name+" end cycle###"+"\n #############################");
 		}
 		
 	}
@@ -45,7 +54,7 @@ public class Program {
 		records = r;
 		cyclenum = cycle;
 		pointer=0;
-		checkloop=0;
+		finishcycle=0;
 	}
 	public int getName() {
 		return name;

@@ -2,11 +2,12 @@ import java.io.*;
 import java.util.Arrays;
 import java.util.LinkedList;
 
-
+ 
+  import java.lang.*; 
 public class readtxt {
 	public RAM r=new RAM();
 	public LTS lts=new LTS();
-	public enum type{cpu,memory,io};
+	//public enum type{cpu,memory,io};
 	//reading the file
 	public  void read() throws IOException {
 		int cpu=0;
@@ -17,7 +18,7 @@ public class readtxt {
 		String line;
 		try {
 			BufferedReader br = new BufferedReader(
-			new FileReader("C:\\Users\\436100096\\workspace\\FAS\\src\\cpumemoryio.txt"));
+			new FileReader("C:\\Users\\436100096\\FAS\\src\\cpumemoryio.txt"));
 			br.readLine();
 			int count=0;
 			int typecount=1;
@@ -71,11 +72,9 @@ public class readtxt {
 //								}
 							}
 						}
-						System.out.println(i+","+array.length);
+						
 						if(i==array.length-1){
-							for(int j=0;j<records.size();j++){
-								System.out.println("?"+records.get(j).cpu);
-							}
+							
 							p = new Program(name,records,records.size());
 							lts.addProccessToJQ(p);
 						}
@@ -96,27 +95,31 @@ public class readtxt {
 		}
 	}
 	//printing the file
-	public void callprint(){
-		for(int i=0;i<lts.jobQueue.size();i++){
-			System.out.println(lts.jobQueue.get(i).getName());
-			System.out.println("END"+i);
-		}
-	}
+	
 	//main
 	public static void main(String[] args) {
 		readtxt a=new readtxt();
+		 long start=System.currentTimeMillis();
+		 long finish;
 		try{
 			a.read();
+			
+			
+			 
 		}
 		catch(Exception e){
 			
 		}
 		a.lts.printjobQ();
+		
 		a.lts.callcontinues(a.lts.jobQueue);
-		a.lts.printpq();
-		a.lts.printpq();
-		a.lts.printpq();
-
+		a.lts.printpq(1);
+		  
+		   finish=System.currentTimeMillis();
+		 
+		  
+		   //Period diff = new Period(start, finish);
+System.out.println(finish-start);
 		
 	}
 }
